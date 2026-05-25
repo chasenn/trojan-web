@@ -92,6 +92,7 @@
                         <el-dropdown-item @click="userItem=scope.row;commonType=4;handleShare()">{{ $t('user.trojanShareLink') }}</el-dropdown-item>
                         <el-dropdown-item @click="userItem=scope.row;commonType=5;handleShare()">{{ $t('user.clashShareLink') }}</el-dropdown-item>
                         <el-dropdown-item @click="userItem=scope.row;handleClash()">{{ $t('user.importClash') }}</el-dropdown-item>
+                        <el-dropdown-item @click="userItem=scope.row;copyLink()">{{ $t('user.copyLink') }}</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
@@ -361,6 +362,19 @@ export default {
             let userInfo = base64Encode(`{"user": "${this.userItem.Username}", "pass": "${base64Decode(this.userItem.Password)}"}`)
             let url = `${window.location.origin}/trojan/user/subscribe?token=${userInfo}`
             window.location.href = `clash://install-config?url=${url}`
+        },
+        copyLink() {
+            let userInfo = btoa(`{"user": "${this.userItem.Username}", "pass": "${atob(this.userItem.Password)}"}`)
+            let url = `${window.location.origin}/trojan/user/subscribe?token=${userInfo}`
+            //复制url到剪贴板，并弹框提示
+            navigator.clipboard.writeText(url).then(() => {
+                this.$message({
+                    message: this.$t('copySuccess'),
+                    type: 'success'
+                })
+            }).catch(() => {
+                this.$message.error(this.$t('copyFail'))
+            })
         },
         handelEditUser() {
             this.userInfo.username = this.userItem.Username

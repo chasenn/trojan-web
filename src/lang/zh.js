@@ -103,6 +103,7 @@ export default {
         trojanShareLink: 'trojan链接',
         clashShareLink: 'clash链接',
         importClash: '导到clash',
+        copyLink: '复制订阅链接',
         meanUnlimit: '-1代表无流量限制',
         inputUsername: '输入用户名',
         inputPassword: '输入密码',
